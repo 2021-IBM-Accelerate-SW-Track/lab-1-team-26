@@ -1,11 +1,15 @@
 import Header from "./component/header"
-import Button from "./component/button"
+import Body from "./component/body"
 import './App.css';
 
 function App() {
+
+
+
   return (
     <div className="App">
     <Header/>
+    <Body/>
     </div>
   );
 }
