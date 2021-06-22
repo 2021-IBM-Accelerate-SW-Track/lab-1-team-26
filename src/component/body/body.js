@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 
 
 
@@ -103,9 +102,10 @@ export default function Body() {
     
     <Button  color="primary"  size="medium" type="button" onClick={function(){handleEdit(lists)}}>Edit</Button>
     <Button color="primary" size="medium" type="button" onClick={function(){Update(lists)}}>Update</Button>
-    <IconButton aria-label="delete" onClick = {() => Delete(lists)}>
-              <DeleteIcon />
-    </IconButton>
+    
+    <Button variant="contained" color="primary" onClick = {() => Delete(lists)}>
+      Delete
+    </Button> 
     <Checkbox color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }}/>
     {dateTime}
 
