@@ -3,6 +3,11 @@ import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Checkbox from '@material-ui/core/Checkbox';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,45 +21,35 @@ const useStyles = makeStyles((theme) => ({
 export default function Body() {
 
     const classes = useStyles();
-
-    const [list, setList] = useState([]);
-
+    const [list, setList] = useState([]) 
     const [value, NewValue] = useState("");
-
     const [listEdit, setListEdit] = useState([]);
-
+    
     const AddOn = (i) => {
+         //prevent empty task
+          i.preventDefault()
+  
+          if(!list){
+              alert('Add text')
+              return
+          }
 
-        i.preventDefault() //prevent empty task
-
+      
         let flag = 0;
-
         for (let i = 0; i < list.length; i++){
-
             if (value === list[i]){
                 alert("No duplicate items")
-
                 flag = 1;
-
             }
-
         }
-
         if (flag === 0){
-
             setList(list.concat(value));
-
             console.log(list);
-
         }
-        
-                
-        
-        
-        
-    }
+    } 
 
-    function Delete (lists){
+
+   function Delete (lists){
 
         const result = list.filter(value => value !== lists);
 
@@ -89,38 +84,45 @@ export default function Body() {
         setList(newUpdate);
 
         setListEdit([]);
-    }
+    } 
     var today = new Date();
 
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
 
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
-    var dateTime = date+' '+time;
+    var dateTime = 'Date created: ' + date+' '+time;
 
     const tasksList = list.map((lists) => <div>
     
-    <Checkbox color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }}/>
-
-    {dateTime}
+    
 
     {listEdit === lists ? (<input type = "text" id="text-update" />) : <h3>{lists}</h3> }
 
-    <Button variant="contained" color="secondary" type="button" onClick={function(){Delete(lists)}}>Delete</Button>
+    
+    
+    <Button  color="primary"  size="medium" type="button" onClick={function(){handleEdit(lists)}}>Edit</Button>
+    <Button color="primary" size="medium" type="button" onClick={function(){Update(lists)}}>Update</Button>
+    <IconButton aria-label="delete" onClick = {() => Delete(lists)}>
+              <DeleteIcon />
+    </IconButton>
+    <Checkbox color="primary" inputProps={{ 'aria-label': 'secondary checkbox' }}/>
+    {dateTime}
 
-    <Button variant="contained" color="secondary" type="button" onClick={function(){Update(lists)}}>Update</Button>
+   
 
-    <Button type="button" onClick={function(){handleEdit(lists)}}>Edit</Button>
-
-    </div>);
+    </div>); 
 
   
   return (
+    
     <form className={classes.root} noValidate autoComplete="off" onSubmit={AddOn}>
       <TextField data-testid="new-item-input" value={value} 
       onChange={(i)=> NewValue(i.target.value)} id="standard-basic" label="TO-DO"/>
-      {tasksList}
-      <Button data-testid="new-item-button" variant="contained" color="primary" type = "submit" id = "save-button">Save Task</Button>
+      <Button data-testid="new-item-button" variant="contained" color="primary" 
+          type = "submit" id = "save-button">Save Task</Button>
+     {tasksList}
+           
     </form>
   );
 }
